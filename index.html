@@ -125,12 +125,7 @@
             display: inline-block;
             width: 85%;
             max-width: 280px;
-        }
-
-        .cat-gif {
-            width: 100%;
-            border-radius: 12px;
-            display: block;
+            overflow: hidden; /* Ensures the iframe doesn't break the rounded border */
         }
 
         /* Floating Hearts Animation Background */
@@ -181,7 +176,11 @@
         <p class="success-msg">Bhosdiwale Chai sutta pilaa 😁</p>
         
         <div class="media-frame">
-            <img class="cat-gif" src="https://media.tenor.com/E87E96M0660AAAAC/399269-cat-middle-finger.gif" alt="Funny Cat Middle Finger">
+            <div class="tenor-gif-embed" data-postid="7145826872122606660" data-share-method="host" data-aspect-ratio="1" data-width="100%">
+                <a href="https://tenor.com/view/399269-cat-middle-finger-cat-cat-meme-cat-funny-gif-7145826872122606660">399269 Cat Middle Finger GIF</a> from 
+                <a href="https://tenor.com/search/399269-gifs">399269 GIFs</a>
+            </div>
+            <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
         </div>
 
         <audio id="bgMusic" loop>
