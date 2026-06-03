@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chai Sutta Request</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 50%, #ff8c75 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            padding: 20px;
+            position: relative;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* --- SCREEN 1: INTERACTIVE QUESTION AREA --- */
+        .interactive-title {
+            font-size: 32px;
+            color: white;
+            margin-bottom: 5px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .recipient-display {
+            font-size: 24px;
+            color: white;
+            font-weight: bold;
+            margin-bottom: 40px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .btn-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
+            position: relative;
+            min-height: 150px;
+        }
+
+        .action-btn {
+            padding: 14px 40px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            width: 180px;
+        }
+
+        #yesBtn {
+            background-color: #fff;
+            color: #ff477e;
+            z-index: 10;
+        }
+
+        #noBtn {
+            background-color: rgba(255, 255, 255, 0.3);
+            color: white;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.5);
+            position: absolute;
+            top: 70px;
+            transition: all 0.1s ease; 
+        }
+
+        .hint-text {
+            color: white;
+            font-size: 14px;
+            margin-top: 30px;
+            font-style: italic;
+            min-height: 40px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            padding: 0 10px;
+        }
+
+        /* --- SCREEN 2: FINAL SUCCESS SCREEN --- */
+        .success-container {
+            text-align: center;
+            width: 100%;
+            max-width: 450px;
+            color: white;
+            animation: fadeIn 0.8s ease-in-out;
+            z-index: 5;
+        }
+
+        .success-title {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        
+        .success-msg {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            padding: 0 15px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .media-frame {
+            background: white;
+            padding: 12px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            display: inline-block;
+            width: 85%;
+            max-width: 280px;
+        }
+
+        .cat-gif {
+            width: 100%;
+            border-radius: 12px;
+            display: block;
+        }
+
+        /* Floating Hearts Animation Background */
+        .heart {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 24px;
+            animation: floatUp 4s linear infinite;
+            bottom: -50px;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) scale(0);
+                opacity: 0;
+            }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% {
+                transform: translateY(-105vh) scale(1.3);
+                opacity: 0;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="interactiveScreen" style="text-align: center; width: 100%; max-width: 500px; z-index: 5;">
+        <h1 class="interactive-title">Tu Gandu hai na??</h1>
+        <div class="recipient-display">Smart Sachin💖</div>
+        
+        <div class="btn-container">
+            <button id="yesBtn" class="action-btn" onclick="showSuccess()">Yes 😏</button>
+            <button id="noBtn" class="action-btn">No 🥺</button>
+        </div>
+        <div id="hintText" class="hint-text"></div>
+    </div>
+
+    <div id="successScreen" class="success-container hidden">
+        <h2 class="success-title">chl be </h2>
+        <p class="success-msg">Bhosdiwale Chai sutta pilaa 😁</p>
+        
+        <div class="media-frame">
+            <img class="cat-gif" src="https://media.tenor.com/E87E96M0660AAAAC/399269-cat-middle-finger.gif" alt="Funny Cat Middle Finger">
+        </div>
+
+        <audio id="bgMusic" loop>
+            <source src="music.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <script>
+        const noHints = [
+            "Come on, just press Yes na... 😏",
+            "The 'No' button is running away because it knows the truth! 😂",
+            "Try hitting Yes... free ki chai milegi 😜",
+            "Even the button knows what you are 💀",
+            "Bro, the No button is literally running for its life 😭"
+        ];
+        
+        let hintIndex = 0;
+
+        window.onload = function() {
+            const noBtn = document.getElementById('noBtn');
+
+            function moveNoButton() {
+                const padding = 100;
+                const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+                const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+                
+                const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
+                const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
+
+                noBtn.style.position = 'fixed';
+                noBtn.style.left = randomX + 'px';
+                noBtn.style.top = randomY + 'px';
+
+                document.getElementById('hintText').innerText = noHints[hintIndex];
+                hintIndex = (hintIndex + 1) % noHints.length;
+            }
+
+            noBtn.addEventListener('mouseover', moveNoButton);
+            noBtn.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                moveNoButton();
+            });
+        };
+
+        function showSuccess() {
+            document.getElementById('interactiveScreen').classList.add('hidden');
+            document.getElementById('successScreen').classList.remove('hidden');
+            
+            const music = document.getElementById('bgMusic');
+            music.play().catch(error => {
+                console.log("Audio presentation blocked until page focus.");
+            });
+
+            startHeartRain();
+        }
+
+        function startHeartRain() {
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+                heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                
+                document.body.appendChild(heart);
+                setTimeout(() => { heart.remove(); }, 5000);
+            }, 300);
+        }
+    </script>
+</body>
+</html>
